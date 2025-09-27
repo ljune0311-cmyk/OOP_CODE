@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+//객체를 여러개 만들고 프렌즈 함수가 적용 되는지 테스트
+class FriendClass {
+	int x, y;
+public:
+	FriendClass(int a = 40, int b = 10) : x(a), y(b) {}
+	friend void add(FriendClass Fun);
+};
+void add(FriendClass Fun) {
+	cout << "x: " << Fun.x << " " << "y: " << Fun.y << endl;
+}
+
+int main() {
+	//객체 생성하기
+	FriendClass Fun(10, 20); //객체 Fun생성
+	FriendClass Fun1(30); //객체 Fun1생성
+	FriendClass Fun2(50, 60); //객체 Fun2 생성
+
+/*ㅡㅡㅡㅡㅡ객체 여러개 생성 후 프렌즈 함수 써보기*/
+
+	//프렌즈 함수 호출
+	add(Fun);
+	add(Fun1);
+	add(Fun2);
+	return 0;
+}
