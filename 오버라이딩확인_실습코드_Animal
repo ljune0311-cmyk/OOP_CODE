@@ -1,0 +1,51 @@
+#include <iostream>
+using namespace std;
+//오버라이딩: 부모 클래스의 함수를 자식 클래스에서 재정의하여 사용 
+class Animal {
+public:
+    void speak() {
+        cout << "동물이 소리를 냅니다." << endl;
+    }
+};
+
+class Dog : public Animal {
+public:
+    void speak() { 
+        cout << "멍멍!" << endl;
+    }
+};
+
+class Cat : public Animal {
+public:
+    void speak() {
+        cout << "야옹!" << endl;
+    }
+};
+
+int main() {
+    Animal a1;
+    Dog a2;
+    Cat a3;
+    a1.speak(); //동물이 소리를 냅니다.
+    a2.speak(); //멍멍!
+    a3.speak(); //야옹!
+
+    //Animal 객체를 하나 만들고 a2와 a3를 대입해서
+    //어떤 값이 나오는가 해보자.
+    Animal a; Cat b; Dog c;
+	a.speak(); // -> Animal 객체의 speak() 실행
+    a = b;  //야옹!
+    b.speak(); // -> Cat 객체의 speak() 실행
+    a = c;  //멍멍!
+    c.speak(); // -> Dog 객체의 speak() 실행
+ 
+   //결론: a는 Animal의 성질을 가졌으나
+   //자식 클래스의 객체 b, c를 대입하면 b와 c는
+   //여전히 Cat, Dog으로 동작한다.
+   //하지만 a.speak()를 실행하면 항상 Animal의 speak()가 실행된다.
+   //즉, 다형성과 비슷해 보이지만 실제로는 다형성이 아니다.
+   //이유는 speak()가 virtual 가상함수가 아니기 때문에
+   //따라서 오버라이딩은 되어 있지만 다형성은 아니다.
+
+    return 0;
+}
