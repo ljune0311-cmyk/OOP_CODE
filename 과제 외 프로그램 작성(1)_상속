@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+
+//부모 클래스 Person
+class Person {
+protected: //자식 클래스에서 접근할 수 있도록 protected로 변경
+    int age;
+    int height; 
+public:
+    //입력 파라미터가 있는 생성자
+    Person(int age, int height) : age(age), height(height) {}
+
+    void personfun() {
+        cout << "나이: " << age << endl;
+        cout << "키: " << height << endl;
+    }
+};
+//자식 클래스 Student로 Person을 상속받음
+class Student : public Person {
+private: //학생의 고유한 속성은 private에 넣어둠
+    int studentID; 
+    string major;
+public:
+    //부모 클래스의 생성자를 호출
+    Student(int age, int height, int studentID, string major)
+        : Person(age, height), studentID(studentID), major(major) {}
+    //학생의 정보 출력 함수
+    void studentfun() {
+        personfun();  //부모 클래스의 함수 재사용
+        //자식 클래스만의 정보 출력
+        cout << "학번: " << studentID << endl;
+        cout << "전공: " << major << endl;
+    }
+};
+int main() {
+    // Student 클래스 객체 생성
+    Student student1(20, 175, 20250000, "게임공학과");
+    // 학생 정보 출력
+    student1.studentfun();
+    return 0;
+}
