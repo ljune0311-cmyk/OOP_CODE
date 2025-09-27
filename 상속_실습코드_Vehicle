@@ -1,0 +1,66 @@
+#include <iostream>
+using namespace std;
+class Vehicle
+{
+private:
+	int person = 0;    // 탑승인원
+	int baggage;       // 화물 무게
+public:
+	
+	void ride() { person++; } // 탑승
+	void load(int weight) { baggage += weight; } //짐 싣기
+	void getOff() { person--; } // 하차
+	int getPerson() { return person; } // 탑승인원 확인
+	int getBaggage() { return baggage; } // 화물 무게 확인
+};
+//부모클래스인 Vehicle에 자식클래스 Cruise, AirPlane 동시에 적용되는 함수를 만들면
+//Cruise와 AirPlane 클래스에서 각각 탑승인원 확인을 위한 별도의 함수를 만들 필요 없이, 
+//부모 클래스의 함수를 재사용할 수 있다.
+//이것이 상속의 주요 장점 중 하나로
+//코드의 재사용성과 유지보수성을 높일 수 있다.
+
+class Cruise :public Vehicle
+{
+private:
+	int room;
+public:
+	void setRoom(int room);    //크루즈의 방 수 설정
+	void countPerson()
+	{ cout << Vehicle::getPerson() << endl; }  //부모클래스 호출
+};
+
+class AirPlane :public Vehicle
+{
+private:
+	int seat;
+public:
+	void setSeat(int seat);    // 자리 수 설정
+	void countPerson()    // 탑승인원 확인
+	{ cout << Vehicle::getPerson() << endl; }  // 부모클래스 호출
+};
+
+int main(int argc, char const* argv[])
+{
+	Cruise dolphin;
+	dolphin.ride();    // 부모클래스 멤버함수 접근
+	dolphin.load(10);  // 부모클래스 멤버함수 접근
+	dolphin.countPerson();     // 자식클래스 멤버함수 호출
+
+	AirPlane cppAir;
+	cppAir.ride();    // 부모클래스의 멤버함수 접근
+	cppAir.load(20);  // 부모클래스 멤버함수 접근 
+	cppAir.countPerson();     // 자식클래스 멤버함수 호출
+
+	//자식클래스의 객체가 부모의 멤버 변수에 접근이 가능한지 실험해보기
+	//person와 baggage는 private이므로 접근 불가
+	//cout << dolphin.person << endl;   
+    //cout << dolphin.baggage << endl; 
+	//cout << cppAir.person << endl;
+	//cout << cppAir.baggage << endl;
+
+    //public을 통하여 접근 가능
+	cout << dolphin.getPerson() << endl;
+	cout << dolphin.getBaggage() << endl;
+	cout << cppAir.getPerson() << endl;
+	cout << cppAir.getBaggage() << endl;
+}

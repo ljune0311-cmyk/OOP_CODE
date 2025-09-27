@@ -1,0 +1,66 @@
+#include <iostream>
+using namespace std;
+
+class base {
+private:
+	int pri = 1; 
+	//private 멤버 변수로 base 내부에서만 접근 가능
+protected:
+	int pro = 2; 
+	//protected 멤버 변수로 base클래스와 자식 클래스 내부에서 접근 가능
+public:
+	int pub = 3; 
+	//public 멤버 변수로 어디서든 접근 가능
+};
+
+class Derived1 : public base {
+public:
+	void a() {
+		//cout << pri << endl; 
+		//pri는 private이므로 멤버 접근 불가
+		cout << pro << endl;	//접근 가능
+		cout << pub << endl;	//접근 가능
+	}
+};
+class Derived2 : protected base {
+public:
+	void b() {
+		//cout << pri << endl;
+		//pri는 private이므로 멤버 접근 불가
+		cout << pro << endl;	//접근 가능
+		cout << pub << endl;	//접근 가능
+	}
+};
+class Derived3 : private base {
+public:
+	void c() {
+		//cout << pri << endl;	
+		//pri는 private이므로 멤버 접근 불가
+		cout << pro << endl;	//접근 가능
+		cout << pub << endl;	//접근 가능
+	}
+};
+int main() {
+
+	Derived1 d1; //접근 지정자가 public인 클래스의 객체를 생성
+	d1.a();
+	//cout << d1.pri << endl;
+	//pri는 private이므로 멤버 접근 불가
+	//cout << d1.pro << endl; 
+	//pro는 Derived1클래스에서 protected이기 때문에 클래스 외부에서 접근 불가
+	cout << d1.pub << endl;		//접근 가능
+	
+	Derived2 d2; //접근 지정자가 protected인 클래스의 객체를 생성
+	d2.b(); //Derived2 클래스는 protected라서 클래스 외부에서 접근 불가함.
+	//cout << d2.pri << endl;		//접근 불가
+	//cout << d2.pro << endl;		//접근 불가
+	//cout << d2.pub << endl;		//접근 불가
+
+	Derived3 d3; //접근 지정자가 private인 클래스의 객체를 생성
+	d3.c(); //private멤버는 오직 자신이 선언된 클래스 내부에서 접근이 가능
+	//cout << d3.pri << endl;		//접근 불가
+	//cout << d3.pro << endl;		//접근 불가
+	//cout << d3.pub << endl;		//접근 불가
+
+	return 0;
+}
